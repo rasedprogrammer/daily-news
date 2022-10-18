@@ -44,13 +44,18 @@
 				</div>
 				<div id="blog-question" class="mt-5 d-none">
 					<h3 class="">
-						Question-1: What's the diffrence between arrow function & regular function?
+						Question-1: What is difference between var, let and const?
 					</h3>
-					<p></p>
+					<p>Var is function-scoped while let and const are block-scoped. Var variables can be reassigned while let and const variables can not. Var variables are declared using the var keyword while let and const variables are declared using the let and const keywords respectively. Const variables are immutable while let and var variables are not.</p>
 					<h3 class="">
-						Question-1: What's the diffrence between arrow function & regular function?
+						Question-1: The Difference Between Regular Functions and Arrow Functions?
 					</h3>
-					<p></p>
+					<p>Arrow function — also called fat arrow function— is a new feature introduced in ES6 that is a more concise syntax for writing function expressions. While both regular JavaScript functions and arrow functions work in a similar manner, there are certain differences between them.</p>
+					<p><b>1. Syntax:</b> The arrow function allows to accomplish the same result with fewer lines of code and approximately half the typing. Curly brackets are not required if only one expression is present. </p>
+					<p><b>2. Arguments binding:</b> Arrow functions do not have an arguments binding. However, they have access to the arguments object of the closest non-arrow parent function. Named and rest parameters are heavily relied upon to capture the arguments passed to arrow functions.</p>
+					<p><b>3. Use of this keyword:</b> Unlike regular functions, arrow functions do not have their own this. The value of this inside an arrow function remains the same throughout the lifecycle of the function and is always bound to the value of this in the closest non-arrow parent function.</p>
+					<p><b>4. Using new keyword:</b> egular functions created using function declarations or expressions are constructible and callable. Since regular functions are constructible, they can be called using the new keyword. However, the arrow functions are only callable and not constructible, i.e arrow functions can never be used as constructor functions. Hence, they can never be invoked with the new keyword.</p>
+					<p><b>5. No duplicate named parameters: </b>Arrow functions can never have duplicate named parameters, whether in strict or non-strict mode.</p>
 					<h3 class="">
 						Question-1: What's the diffrence between arrow function & regular function?
 					</h3>
