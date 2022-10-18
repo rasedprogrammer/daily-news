@@ -131,4 +131,9 @@ const displayNewsDetails = (news) => {
 
 	`;
 };
+// Question And Answer Code
+document.getElementById("question-answer").addEventListener("click", () => {
+	const questionAnswer = document.getElementById("blog-question");
+	questionAnswer.classList.remove("d-none");
+});
 loadCategory();
