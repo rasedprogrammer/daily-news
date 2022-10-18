@@ -44,20 +44,29 @@ const showNewsCategory = async (id) => {
 
 		// Question And Answer Code
 		document.getElementById("question-answer").addEventListener("click", () => {
+			const noNewsFound = document.getElementById("no-found-message");
+			if (categoryData.length === 0) {
+				noNewsFound.classList.add("d-none");
+			}
 			newsCount.innerText = ``;
 			newsCard.innerText = ``;
 			const questionAnswer = document.getElementById("blog-question");
 			questionAnswer.classList.remove("d-none");
 		});
 
+		// No News Found Code
 		const noNewsFound = document.getElementById("no-found-message");
 		if (categoryData.length === 0) {
 			noNewsFound.classList.remove("d-none");
 		} else {
 			noNewsFound.classList.add("d-none");
 		}
+		const questionAnswer = document.getElementById("blog-question");
+		questionAnswer.classList.add("d-none");
 
 		categoryData.forEach((category) => {
+			const questionAnswer = document.getElementById("blog-question");
+			questionAnswer.classList.add("d-none");
 			const categoryNewListDiv = document.createElement("div");
 			const newsDetails = category.details;
 			const newsDetailsString = newsDetails.substring(0, 300);
