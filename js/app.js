@@ -62,9 +62,9 @@ const showNewsCategory = async (id) => {
 					<p class="card-text mt-4">${newsDetailsString}....</p>
 					<div class="d-flex">
 						<div class="d-flex me-5">
-							<img style="max-width: 50px; margin-right: 20px;" src="${
+							<img style="width: 30px; height: 30px; margin-right: 20px;" src="${
 								category.author.img
-							}" class="img-fluid rounded" alt=""/>
+							}" class="img-fluid rounded mt-3" alt=""/>
 							<p class="pt-3">${
 								category.author.name
 									? category.author.name
@@ -114,7 +114,6 @@ const newsDetails = async (id) => {
 };
 // Model Function
 const displayNewsDetails = (news) => {
-	console.log(news);
 	const NewsDetail = document.getElementById("newsDetailsModalLabel");
 	NewsDetail.innerText = news.title;
 	const newsDetailsBody = document.getElementById("news-details-body");
@@ -128,6 +127,13 @@ const displayNewsDetails = (news) => {
 			: "No Published Date Found"
 	}</b> </p>
 		<p>${news.details}</p>
+		<div class="d-flex justify-content-around">
+		<p><b>Total View: </b>${news.total_view ? news.total_view : "No Total View"}</p>
+		<p><b>News Rating: </b>${news.rating.number ? news.rating.number : 0}</p>
+		<p><b>Review: </b>${
+			news.rating.badge ? news.rating.badge : "No Review Found"
+		}</p>
+		</div>
 
 	`;
 };
