@@ -35,10 +35,20 @@ const showNewsCategory = async (id) => {
 		const newsCount = document.getElementById("news-count");
 		newsCount.innerText = ``;
 		const viewCategoryCount = document.createElement("h3");
-		viewCategoryCount.innerText = `${categoryData.length} news item found`;
+		viewCategoryCount.innerText = `${
+			categoryData.length ? categoryData.length : "No"
+		} news item found`;
 		newsCount.appendChild(viewCategoryCount);
 		const newsCard = document.getElementById("news-card");
 		newsCard.innerText = ``;
+
+		// Question And Answer Code
+		document.getElementById("question-answer").addEventListener("click", () => {
+			newsCount.innerText = ``;
+			newsCard.innerText = ``;
+			const questionAnswer = document.getElementById("blog-question");
+			questionAnswer.classList.remove("d-none");
+		});
 
 		const noNewsFound = document.getElementById("no-found-message");
 		if (categoryData.length === 0) {
@@ -137,9 +147,4 @@ const displayNewsDetails = (news) => {
 
 	`;
 };
-// Question And Answer Code
-document.getElementById("question-answer").addEventListener("click", () => {
-	const questionAnswer = document.getElementById("blog-question");
-	questionAnswer.classList.remove("d-none");
-});
 loadCategory();
