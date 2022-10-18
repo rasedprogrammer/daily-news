@@ -1,56 +1,65 @@
 const loadCategory = async () => {
-	const url = `https://openapi.programming-hero.com/api/news/categories`;
-	const res = await fetch(url);
-	const data = await res.json();
-	displayCategory(data.data.news_category);
+	try {
+		const url = `https://openapi.programming-hero.com/api/news/categories`;
+		const res = await fetch(url);
+		const data = await res.json();
+		displayCategory(data.data.news_category);
+	} catch (err) {
+		alert(err);
+	}
 };
+// New Categories
 const displayCategory = (categories) => {
-	console.log(categories);
 	const categoryDiv = document.getElementById("category-div");
 	categories.forEach((category) => {
 		const categoryUl = document.createElement("ul");
 		categoryUl.classList.add("nav");
 		categoryUl.innerHTML = `
-      <li class="nav-item">
-	       <a onclick="showNewsCategory('${category.category_id}')" class="nav-link" href="#">${category.category_name}</a>
-	    </li>
+		<li class="nav-item">
+		<a onclick="showNewsCategory('${category.category_id}')" class="nav-link text-body fs-5" href="#">${category.category_name}</a>
+		</li>
     `;
 		categoryDiv.appendChild(categoryUl);
 	});
 };
+
 const showNewsCategory = async (id) => {
-	const url = `https://openapi.programming-hero.com/api/news/category/${id}`;
-	const res = await fetch(url);
-	const data = await res.json();
+	//Spinner Start
+	toggleSpinner(true);
+	try {
+		const url = `https://openapi.programming-hero.com/api/news/category/${id}`;
+		const res = await fetch(url);
+		const data = await res.json();
+		const categoryData = data.data;
 
-	const categoryData = data.data;
-	console.log(categoryData);
-	const newsCard = document.getElementById("news-card");
-	newsCard.innerText = ``;
+		const newsCount = document.getElementById("news-count");
+		newsCount.innerText = ``;
+		const viewCategoryCount = document.createElement("h3");
+		viewCategoryCount.innerText = `${categoryData.length} news item found`;
+		newsCount.appendChild(viewCategoryCount);
+		const newsCard = document.getElementById("news-card");
+		newsCard.innerText = ``;
 
-	const noNewsFound = document.getElementById("no-found-message");
-	if (categoryData.length === 0) {
-		noNewsFound.classList.remove("d-none");
-	} else {
-		noNewsFound.classList.add("d-none");
-	}
+		const noNewsFound = document.getElementById("no-found-message");
+		if (categoryData.length === 0) {
+			noNewsFound.classList.remove("d-none");
+		} else {
+			noNewsFound.classList.add("d-none");
+		}
 
-	categoryData.forEach((category) => {
-		console.log(category);
-		const categoryNewListDiv = document.createElement("div");
-		const newsDetails = category.details;
-		const newsDetailsString = newsDetails.substring(0, 200);
-		categoryNewListDiv.classList.add("row", "g-0");
-		categoryNewListDiv.innerHTML = `
-			<div class="col-md-4 mt-5">
-					<img src="${
-						category.thumbnail_url
-					}" class="img-fluid rounded-start" alt="..." />
+		categoryData.forEach((category) => {
+			const categoryNewListDiv = document.createElement("div");
+			const newsDetails = category.details;
+			const newsDetailsString = newsDetails.substring(0, 300);
+			categoryNewListDiv.classList.add("row", "g-0");
+			categoryNewListDiv.innerHTML = `
+			<div class="col-md-4 w-auto me-5 mt-5">
+					<img src="${category.thumbnail_url}" class="img-auto rounded-start" alt="..." />
 			</div>
-			<div class="col-md-8 mt-4">
+			<div class="col-md-8 px-0 mt-5">
 				<div class="card-body">
 					<h5 class="card-title">${category.title}</h5>
-					<p class="card-text">${newsDetailsString}</p>
+					<p class="card-text mt-4">${newsDetailsString}....</p>
 					<div class="d-flex">
 						<div class="d-flex me-5">
 							<img style="max-width: 50px; margin-right: 20px;" src="${
@@ -63,25 +72,45 @@ const showNewsCategory = async (id) => {
 							}</p>
 						</div>
 						<div class="d-flex ms-5">
-							<p class="pt-3">Total View: ${category.total_view}</p>
+							<p class="pt-3">Total View: ${category.total_view ? category.total_view : 0}</p>
 						</div>
 						<div class="d-flex ms-5">
 							<p onclick="newsDetails('${
 								category._id
-							}')" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#newsDetailslModal")">Read More</p>
+							}')" class="btn btn-primary ms-5 mt-3" data-bs-toggle="modal" data-bs-target="#newsDetailslModal")">Read More</p>
 						</div>
 					</div>
 				</div>
 			</div>
 	`;
-		newsCard.appendChild(categoryNewListDiv);
-	});
+			newsCard.appendChild(categoryNewListDiv);
+		});
+	} catch (err) {
+		alert(err);
+	}
+	//Spinner Stop
+	toggleSpinner(false);
 };
+// Spinner Code
+const toggleSpinner = (isLoading) => {
+	const loaderSection = document.getElementById("loader");
+	if (isLoading) {
+		loaderSection.classList.remove("d-none");
+	} else {
+		loaderSection.classList.add("d-none");
+	}
+};
+
+// News Details Code
 const newsDetails = async (id) => {
-	const url = `https://openapi.programming-hero.com/api/news/${id}`;
-	const res = await fetch(url);
-	const data = await res.json();
-	displayNewsDetails(data.data[0]);
+	try {
+		const url = `https://openapi.programming-hero.com/api/news/${id}`;
+		const res = await fetch(url);
+		const data = await res.json();
+		displayNewsDetails(data.data[0]);
+	} catch (err) {
+		alert(err);
+	}
 };
 const displayNewsDetails = (news) => {
 	console.log(news);
@@ -102,22 +131,3 @@ const displayNewsDetails = (news) => {
 	`;
 };
 loadCategory();
-
-/**
- * API Links
-All News Category
-url: https://openapi.programming-hero.com/api/news/categories
-
-All news in a Category
-URL Format: https://openapi.programming-hero.com/api/news/category/{category_id}
-
-Example: https://openapi.programming-hero.com/api/news/category/01
-
-News detail url:
-URL Format: https://openapi.programming-hero.com/api/news/{news_id}
-
-Example: https://openapi.programming-hero.com/api/news/0282e0e58a5c404fbd15261f11c2ab6a
-
-Missing Data:
-Here total view and author name is null https://openapi.programming-hero.com/api/news/2e78e5e0310c2e9adbb6efb1a263e745
- */
