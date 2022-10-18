@@ -112,6 +112,7 @@ const newsDetails = async (id) => {
 		alert(err);
 	}
 };
+// Model Function
 const displayNewsDetails = (news) => {
 	console.log(news);
 	const NewsDetail = document.getElementById("newsDetailsModalLabel");
